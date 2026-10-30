@@ -99,7 +99,7 @@ stages:
         steps:
           - task: ManualValidation@0
             inputs:
-              notifyUsers: 'jefersonvillacis@hotmail.com'
+              notifyUsers: 'andres.salazar.d_@hotmail.com'
               instructions: 'Aprobación requerida para ejecutar la fase de despliegue continuo en OpenShift Sandbox.'
               onTimeout: 'reject'
 
@@ -121,7 +121,7 @@ stages:
               sudo mv oc /usr/local/bin/
 
               echo "=== 2. Autenticando en el Clúster ==="
-              oc login --token=$(OPENSHIFT_TOKEN) --server=$(OPENSHIFT_SERVER) --insecure-skip-tls-verify=true
+              oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER --insecure-skip-tls-verify=true
 
               echo "=== 3. Seleccionando Proyecto ==="
               oc project andsalaz2026-dev
@@ -144,6 +144,9 @@ stages:
               echo "=== 8. Obteniendo URL de la Aplicación ==="
               oc get route jee-msa-web-demo-pipeline -o jsonpath='{"URL: http://"}{.spec.host}{"\n"}'
             displayName: 'Descarga CLI, Login y Despliegue Docker'
+            env:
+             OPENSHIFT_TOKEN: $(OPENSHIFT_TOKEN)
+             OPENSHIFT_SERVER: $(OPENSHIFT_SERVER)
 
   # ==========================================
   # STAGE 4: NOTIFICACIONES (NOTIFICATIONS)
