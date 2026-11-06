@@ -162,3 +162,21 @@ stages:
           - script: |
               echo "Estado final de la ejecución del pipeline construido por Jeferson Villacís: $(Agent.JobStatus)"
             displayName: 'Simulación de Envío de Correo Electrónico'
+  # ==========================================
+  # STAGE 5: STAGE DE PRUEBA / VERIFICACIÓN
+  # ==========================================
+  - stage: Test_Verification
+    displayName: 'Prueba de Nuevo Stage'
+    dependsOn: [] 
+    jobs:
+      - job: SimpleTestJob
+        displayName: 'Ejecutar Tarea de Prueba'
+        pool:
+          vmImage: 'ubuntu-24.04'
+        steps:
+          - script: |
+              echo "=== INICIANDO STAGE DE PRUEBA ==="
+              echo "¡El nuevo stage se ha ejecutado correctamente!"
+              echo "Usuario ejecutor: Andrés Salazar"
+              echo "Fecha del sistema: $(date)"
+            displayName: 'Imprimir Mensaje de Comprobación'
